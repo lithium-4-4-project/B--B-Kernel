@@ -1580,11 +1580,11 @@ void handle_irq_for_port(evtchn_port_t port, struct evtchn_loop_ctrl *ctrl)
 	if (!ctrl->defer_eoi && !(++ctrl->count & 0xff)) {
 		ktime_t kt = ktime_get();
 
-		if (!ctrl->timeout.tv64) {
+		if (!ctrl->timeout) {
 			kt = ktime_add_ms(kt,
 					  jiffies_to_msecs(event_loop_timeout));
 			ctrl->timeout = kt;
-		} else if (kt.tv64 > ctrl->timeout.tv64) {
+		} else if (kt > ctrl->timeout) {
 			ctrl->defer_eoi = true;
 		}
 	}

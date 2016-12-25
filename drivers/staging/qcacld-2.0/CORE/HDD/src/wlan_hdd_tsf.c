@@ -1282,10 +1282,10 @@ static void hdd_tsf_cp_sk(adf_nbuf_t netbuf, struct sock *sk, bool sk_to_tstamp)
 static void hdd_tsf_cp_sk(adf_nbuf_t netbuf, struct sock *sk, bool sk_to_tstamp)
 {
 	if (sk_to_tstamp)
-		memcpy((void *)(&netbuf->tstamp.tv64), (void *)(&netbuf->sk),
+		memcpy((void *)(&netbuf->tstamp), (void *)(&netbuf->sk),
 		       sizeof(netbuf->sk));
 	else
-		memcpy((void *)(&sk), (void *)(&netbuf->tstamp.tv64),
+		memcpy((void *)(&sk), (void *)(&netbuf->tstamp),
 		       sizeof(sk));
 }
 #endif
