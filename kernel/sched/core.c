@@ -1295,6 +1295,10 @@ get_adjusted_cpumask(const struct task_struct *p,
 	if (p->flags & PF_LOW_POWER)
 		return cpu_lp_mask;
 
+	/* Force all performance-critical kthreads onto the big cluster */
+	if (p->flags & PF_PERF_CRITICAL)
+		return cpu_perf_mask;
+
 	return orig_mask;
 }
 
@@ -1345,6 +1349,8 @@ static int __set_cpus_allowed_ptr(struct task_struct *p,
 	struct rq *rq;
 	unsigned int dest_cpu;
 	int ret = 0;
+
+	new_mask = get_adjusted_cpumask(p, new_mask);
 
 	rq = task_rq_lock(p, &flags);
 
