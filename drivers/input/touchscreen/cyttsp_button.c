@@ -1184,14 +1184,14 @@ static const struct attribute_group cyttsp_attr_group = {
 static int cyttsp_proc_init(struct kernfs_node *sysfs_node_parent)
 {
 	int ret = 0;
-	char *buf, *path = NULL;
+	char *buf = NULL;
 	char *reversed_keys_sysfs_node;
 	struct proc_dir_entry *proc_entry_buttons = NULL;
 	struct proc_dir_entry *proc_symlink_tmp  = NULL;
 
 	buf = kzalloc(PATH_MAX, GFP_KERNEL);
 	if (buf)
-		path = kernfs_path(sysfs_node_parent, buf, PATH_MAX);
+		kernfs_path(sysfs_node_parent, buf, PATH_MAX);
 
 	proc_entry_buttons = proc_mkdir("buttons", NULL);
 	if (proc_entry_buttons == NULL) {
@@ -1201,7 +1201,7 @@ static int cyttsp_proc_init(struct kernfs_node *sysfs_node_parent)
 
 	reversed_keys_sysfs_node = kzalloc(PATH_MAX, GFP_KERNEL);
 	if (reversed_keys_sysfs_node)
-		sprintf(reversed_keys_sysfs_node, "/sys%s/%s", path, "reversed_keys");
+		sprintf(reversed_keys_sysfs_node, "/sys%s/%s", "reversed_keys");
 	proc_symlink_tmp = proc_symlink("reversed_keys_enable",
 			proc_entry_buttons, reversed_keys_sysfs_node);
 	if (proc_symlink_tmp == NULL) {
