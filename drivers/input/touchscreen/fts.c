@@ -3826,7 +3826,6 @@ static int fts_interrupt_install(struct fts_ts_info *info)
 	hrtimer_start(&info->timer, ktime_set(1, 0), HRTIMER_MODE_REL);
 #else
 	dev_dbg(info->dev, "Interrupt Mode\n");
-	bdata->irq_flags |= IRQF_PERF_CRITICAL;
 	error = request_threaded_irq(info->client->irq, NULL, fts_interrupt_handler,
 			bdata->irq_flags, info->client->name, info);
 	if (error) {
